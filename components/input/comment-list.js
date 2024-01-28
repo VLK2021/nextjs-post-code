@@ -7,13 +7,13 @@ function CommentList() {
       <li>
         <p>My comment is amazing!</p>
         <div>
-          By <address>Maximilian</address>
+          By <address>Volodymyr</address>
         </div>
       </li>
       <li>
         <p>My comment is amazing!</p>
         <div>
-          By <address>Maximilian</address>
+          By <address>Volodymyr</address>
         </div>
       </li>
     </ul>
