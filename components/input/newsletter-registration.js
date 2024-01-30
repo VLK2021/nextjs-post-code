@@ -7,7 +7,6 @@ function NewsletterRegistration() {
 
     function registrationHandler(event) {
         event.preventDefault();
-
         const enteredEmail = emailInputRef.current.value;
 
         fetch('/api/newsletter', {
