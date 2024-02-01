@@ -1,5 +1,15 @@
-import { MongoClient } from 'mongodb';
+import {MongoClient} from 'mongodb';
 
+
+async function connectDatabase() {
+    const client = await MongoClient.connect('mongodb+srv://skypevf:nextjs-project@cluster0.mfg9hqf.mongodb.net/events?retryWrites=true&w=majority');
+    return client;
+}
+
+async function insertDocument(client, document) {
+    const db = client.db();
+    await db.collection('newsletter').insertOne(document);
+}
 
 async function handler(req, res) {
     if (req.method === 'POST') {
@@ -10,11 +20,22 @@ async function handler(req, res) {
             return;
         }
 
-        const client = await MongoClient.connect('mongodb+srv://skypevf:nextjs-project@cluster0.mfg9hqf.mongodb.net/events?retryWrites=true&w=majority');
-        const db = client.db();
+        let client;
 
-        await db.collection('newsletter').insertOne({email: userEmail});
-        client.close();
+        try {
+            client = await connectDatabase();
+        } catch (error) {
+            res.status(500).json({message: 'Connecting to the database failed'});
+            return;
+        }
+
+        try {
+            await insertDocument(client, {email: userEmail});
+            client.close();
+        } catch (error) {
+            res.status(500).json({message: 'Inserting data failed'});
+            return;
+        }
 
         res.status(201).json({message: 'Signed up!'});
     }
