@@ -1,4 +1,5 @@
 export async function getAllEvents() {
+  // const response = await fetch('https://react-meetup-e5ce3-default-rtdb.firebaseio.com/events.json');
   const response = await fetch('https://react-meetup-e5ce3-default-rtdb.firebaseio.com/events.json');
   const data = await response.json();
 
